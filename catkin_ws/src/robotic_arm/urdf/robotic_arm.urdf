@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<robot name="robotic_arm">
+
+  <link name="base_link">
+
+    <visual>
+      <geometry>
+        <mesh filename="package://robotic_arm/meshes/base_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.5"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size = "0.5 0.5 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <joint name="base_torso_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="torso_link"/>
+    <origin xyz="0 0 60.53" rpy="0 0 0"/>
+    <axis xyz="0 0 1" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+  <link name="torso_link">
+
+    <visual>
+      <geometry>
+	      <mesh filename="package://robotic_arm/meshes/torso_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+	      <box size = "0.5 0.5 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <joint name="torso_forearm_joint" type="revolute">
+    <parent link="torso_link"/>
+    <child link="forearm_link"/>
+    <origin xyz="0 48.22 56.5" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="forearm_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/forearm_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+    	<box size = "0.5 0.5 4"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+ <joint name="forearm_arm_link" type="revolute">
+    <parent link="forearm_link"/>
+    <child link="arm_link"/>
+    <origin xyz="0 13.0 215.75" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="arm_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/arm_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+	<box size = "0.5 0.5 3"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+ <joint name="arm_wrist_joint" type="revolute">
+    <parent link="arm_link"/>
+    <child link="wrist_link"/>
+    <origin xyz="0 4.5 160" rpy="0 0 0"/>
+    <axis xyz="0 1 0" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="wrist_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/wrist_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+	<box size = "0.5 0.5 0.5"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+ <joint name="wrist_gripper_joint" type="revolute">
+    <parent link="wrist_link"/>
+    <child link="gripper_link"/>
+    <origin xyz="61 45.25 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0" />
+    <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+    <dynamics damping="50" friction="1"/>
+  </joint>
+
+<link name="gripper_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/gripper_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0.5 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+	<box size = "1 1 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+</robot>

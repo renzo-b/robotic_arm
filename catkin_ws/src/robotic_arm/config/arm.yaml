@@ -1,0 +1,14 @@
+base_torso_joint:
+  ID: 1
+
+torso_forearm_joint:
+  ID: 2
+
+forearm_arm_joint:
+  ID: 3
+
+arm_wrist_joint:
+  ID: 4
+
+wrist_gripper_joint:
+  ID: 5

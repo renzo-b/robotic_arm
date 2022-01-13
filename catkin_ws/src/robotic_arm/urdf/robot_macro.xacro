@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://wiki.ros.org/xacro"  name="robotic_arm">
+    
+    <!-- ****************************************************** -->
+    <!-- *                                          Macros                                                       -->
+    <!-- ****************************************************** -->
+    <xacro:macro name="robotic_arm" params="parent *origin">
+    <xacro:macro name="transmission_block" params="joint_name">
+      <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${joint_name}">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${joint_name}_motor">
+          <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+    </xacro:macro>
+
+    <!-- ****************************************************** -->
+    <!-- *                                          Links                                                           -->
+    <!-- ****************************************************** -->
+    <!-- Base link #1 -->
+    <link name="base_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robotic_arm/meshes/base_link.STL" scale="1 1 1" />
+        </geometry>
+        <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0 " />
+        <geometry>
+          <mesh filename="package://robotic_arm/meshes/base_link.STL" scale="0.1 0.1 0.1" />
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <mass value="1" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+    <gazebo reference="base_link">
+        <material>Gazebo/White</material>
+        <gravity>1</gravity>
+        <selfCollide>0</selfCollide>
+        <kinematic>1</kinematic>
+    </gazebo>
+
+    <!-- Torso link #2 -->
+    <link name="torso_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robotic_arm/meshes/torso_link.STL" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robotic_arm/meshes/torso_link.STL" scale="0.1 0.1 0.1" />
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="0.550" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+    <gazebo reference="torso_link">
+        <material>Gazebo/Blue</material>
+        <gravity>1</gravity>
+        <selfCollide>0</selfCollide>
+        <kinematic>1</kinematic>
+    </gazebo>
+
+
+  <!-- Forearm link #3 -->
+    <link name="forearm_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/forearm_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+    <geometry>
+	    <mesh filename="package://robotic_arm/meshes/forearm_link.STL" scale="0.1 0.1 0.1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <!-- Arm link #4 -->
+    <link name="arm_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/arm_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+    <geometry>
+	    <mesh filename="package://robotic_arm/meshes/arm_link.STL" scale="0.1 0.1 0.1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <!-- Wrist link #5 -->
+    <link name="wrist_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/wrist_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+    <geometry>
+	    <mesh filename="package://robotic_arm/meshes/wrist_link.STL" scale="0.1 0.1 0.1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+  <!-- Gripper link #^ -->
+    <link name="gripper_link">
+
+    <visual>
+      <geometry>
+	    <mesh filename="package://robotic_arm/meshes/gripper_link.STL" scale="1 1 1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+
+    <collision>
+    <geometry>
+	    <mesh filename="package://robotic_arm/meshes/gripper_link.STL" scale="0.1 0.1 0.1" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>
+
+    <inertial>
+	<mass value="1"/>
+	<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+
+  </link>
+
+    <!-- ****** JOINT DEFINITIONS ****** -->
+
+    <joint name="base_fixed_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="base_link" />
+    </joint>
+
+    <joint name="base_torso_joint" type="revolute">
+      <origin xyz="0 0 60.53" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="torso_link" />
+      <axis xyz="0 0 1" />
+      <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+      <dynamics damping="50" friction="1" />
+    </joint>
+    <gazebo reference="base_torso_joint">
+      <provideFeedback>0</provideFeedback>
+    </gazebo>
+
+    <joint name="torso_forearm_joint" type="revolute">
+      <origin xyz="0 48.22 56.5" rpy="0 0 0" />
+      <parent link="torso_link" />
+      <child link="forearm_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+      <dynamics damping="50" friction="1" />
+    </joint>
+    <gazebo reference="torso_forearm_joint">
+      <provideFeedback>0</provideFeedback>
+    </gazebo> 
+ 
+    <joint name="forearm_arm_joint" type="revolute">
+      <origin xyz="0 13.0 215.75" rpy="0 0 0" />
+      <parent link="forearm_link" />
+      <child link="arm_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+      <dynamics damping="50" friction="1" />
+    </joint>
+    <gazebo reference="forearm_arm_joint">
+      <provideFeedback>0</provideFeedback>
+    </gazebo> 
+
+    <joint name="arm_wrist_joint" type="revolute">
+      <origin xyz="0 4.5 160" rpy="0 0 0" />
+      <parent link="arm_link" />
+      <child link="wrist_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+      <dynamics damping="50" friction="1" />
+    </joint>
+    <gazebo reference="arm_wrist_joint">
+      <provideFeedback>0</provideFeedback>
+    </gazebo> 
+
+    <joint name="wrist_gripper_joint" type="revolute">
+      <origin xyz="61 45.25 0" rpy="0 0 0" />
+      <parent link="wrist_link" />
+      <child link="gripper_link" />
+      <axis xyz="1 0 0" />
+      <limit effort="300" velocity="0.1" lower="-3.14" upper="3.14"/>
+      <dynamics damping="50" friction="1" />
+    </joint>
+    <gazebo reference="wrist_gripper_joint">
+      <provideFeedback>0</provideFeedback>
+    </gazebo> 
+
+    <!-- ****** TRANSMISSION BLOCKS ****** -->
+    <xacro:transmission_block joint_name="base_fixed_joint" />
+    <xacro:transmission_block joint_name="base_torso_joint" />
+    <xacro:transmission_block joint_name="torso_forearm_joint" />
+    <xacro:transmission_block joint_name="forearm_arm_joint" />
+    <xacro:transmission_block joint_name="arm_wrist_joint" />
+    <xacro:transmission_block joint_name="wrist_gripper_joint" />
+
+    <!-- ros_control plugin -->
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/robotic_arm</robotNamespace>
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        <legacyModeNS>true</legacyModeNS>
+      </plugin>
+    </gazebo>
+    </xacro:macro>
+</robot>

@@ -1,0 +1,25 @@
+<launch>
+
+    <arg name="urdf_path" default="$(find robotic_arm)/urdf/robot_generated.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro '$(find robotic_arm)/urdf/robot.xacro'"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    </node>
+
+     
+          <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+    <include file="$(find robotic_arm)/launch/move_group.launch">
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+        <arg name="info" value="true"/>
+        <arg name="debug" value="false"/>
+        <arg name="load_robot_description" value="false"/>
+      </include>  
+      
+      <!-- Run Rviz and load the default config to see the state of the move_group node -->
+      <include file="$(find robotic_arm)/launch/moveit_rviz.launch">
+        <arg name="rviz_config" value="$(find robotic_arm)/urdf/moveit.rviz"/>
+        <arg name="debug" value="false"/>
+      </include>
+  </launch>
